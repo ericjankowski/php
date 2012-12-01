@@ -21,6 +21,7 @@
 			<li>PDO</li>
 			<li>MSQLi</li>
 			<li>Git and GitHub</li>
+			<li>CodeIgniter</li>
 		</ul>
 		<h2>Books to Read</h2>
 		<ul>
