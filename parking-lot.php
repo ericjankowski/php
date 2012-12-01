@@ -22,6 +22,10 @@
 			<li>MSQLi</li>
 			<li>Git and GitHub</li>
 			<li>CodeIgniter</li>
+			<li>Database Injections</li>
+			<li>XSS</li>
+			<li>Zend</li>
+			<li>CakePHP</li>
 		</ul>
 		<h2>Books to Read</h2>
 		<ul>
