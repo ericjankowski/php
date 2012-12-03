@@ -2,25 +2,6 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-
- 
-function isAttacked(&$board, $x, $y){
-	foreach($board as $key => $value){
-		if(!is_null($value)){
-			if ($key==$x){
-				return true;
-			}else if($value==$y){
-				return true;
-			}else if(($key-$x) / ($value-$y) == 1){
-				return true;
-			}else if(($key-$x) / ($value-$y) == -1){
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 /**
  * @param $board - the board rows which are filled with column numbers
  * @param $index - the current row number
