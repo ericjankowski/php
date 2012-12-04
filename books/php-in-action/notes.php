@@ -56,6 +56,22 @@
 			</ul>
 		</ul>
 		<h3>Object references in PHP4 and PHP 5</h3>
-		
+		<ul>
+			<li>As with most texts on call-by-ref vs call-by-value, I'm not sure if I understand it better or worse after reading it.</li>
+		</ul>
+		<h3>Intercepting Method Calls and Class Instantiation</h3>
+		<ul>
+			<li>The <a href="chapter-2/multiply.php">Java-style method overloading</a> seems like a real hack on first inspection, but I don't really get the call_user_func_array() call, yet.</li>
+		</ul>
+		<h3>A near aspect-oriented experience: logging method calls</h3>
+		<ul>
+			<li>After installing Homebrew >> Wget >> PEAR >> Log, I can't figure out where the PEAR Log class is trying to access tmp/user.log.  I tried a few of the easily suspected locations, but I don't know enough about Apache to know what I am doing.  Putting Apache administration and PEAR in the parking lot. </li>
+		</ul>
+		<h3>Autoloading classes</h3>
+		<ul>
+			<li>This seems like it might cause more trouble than what it's worth.</li>
+			<li>This entire chapter seems like it is trying to convince me that PHP is still relevant, but it's coming across as a lesson in the dangers of feature envy.  Maybe (Probably) I just need more practice.</li>
+		</ul>
+		<h2>Chapter 3 - Using PHP classes effectively</h2>
 	</body>
 </html>

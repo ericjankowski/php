@@ -1,6 +1,6 @@
 <?php
 
-function isAttacked($board, $x, $y){
+function isAttacked(&$board, $x, $y){
 	foreach($board as $key => $value){
 		if($value != -1){
 			if ($key==$x){
@@ -17,7 +17,7 @@ function isAttacked($board, $x, $y){
 	return false;
 }
 
-function allQueensPlaced($board){
+function allQueensPlaced(&$board){
 	$done = true;
 	for($i=0;$i<sizeof($board);$i++){
 		if($board[$i]==-1){
@@ -27,7 +27,7 @@ function allQueensPlaced($board){
 	return $done;
 }
 
-function placeQueens($board, $index){
+function placeQueens(&$board, $index){
 		
 	if($index==sizeof($board) && allQueensPlaced($board)){	
 		return $board;
@@ -85,15 +85,11 @@ if(isset($_GET['queens']) && is_numeric($_GET['queens'])){
 	$queens=8;
 }
 
-if($queens > 25 || $queens < 4){
+if($queens > 40 || $queens < 4){
 	$queens = 8;
 }
 
-$placements = array($queens);
-
-for($i=0;$i<$queens;$i++){
-	$placements[$i]=-1;
-}
+$placements = array_fill(0, $queens, -1);
 
 $placements = placeQueens($placements, 0);
 

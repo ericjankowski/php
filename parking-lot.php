@@ -26,6 +26,15 @@
 			<li>XSS</li>
 			<li>Zend</li>
 			<li>CakePHP</li>
+			<li>PEAR</li>
+			<li>Algorithms</li>
+			<li>Map/Reduce</li>
+			<li><a href="http://getcomposer.org">Composer</a></li>
+			<li>Apache administration</li>
+			<ul>
+				<li>Backtracking</li>
+				<li>Evolutionary Algorithms</li>
+			</ul>
 		</ul>
 		<h2>Books to Read</h2>
 		<ul>
