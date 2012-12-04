@@ -95,15 +95,15 @@ function isCollision($row, $col, &$board, &$filledPositions){
 			}
 			div.black{
 				background-color:#B58862;
-				width:40px;
-				height:40px;
+				width:20px;
+				height:20px;
 				text-align:center;
 				
 			}
 			div.white{
 				background-color:#F0D9B5;
-				width:40px;
-				height:40px;
+				width:20px;
+				height:20px;
 				text-align:center;
 				
 			}
@@ -115,7 +115,7 @@ function isCollision($row, $col, &$board, &$filledPositions){
 		<p style="width:500px;">This is his solution, and while I am impressed that it can support a much higher n (40's - 50's depending on the random numbers that are chosen), I am more impressed that he took the time.  PHP's biggest strong points are its low barrier to entry and its ubiquitous presence on server platforms.  I really appreciate the fact the ajbogh took the time to play with a pretty pesky but (at the end of the day) trivial problem of optimizing a PHP system that I fumbled through enough to be computationally intensive.</p>
 		<p style="width:500px">I am just getting started with PHP, so I haven't interacted much with the PHP community, yet, but if ajbogh is any indication, I'm going to meet some very smart and very helpful developers out there.</p>
 		<p>Thanks.</p>
-		<form action="nqueens.php" method="GET">
+		<form action="nqueens_2.php" method="GET">
 			<p>Number of queens: <input name="queens" type="text" /><input name="submit" type="submit" value="Go" /></p>
 		</form>
 		<div style='margin:50px;border:1px solid black;'>
@@ -147,7 +147,7 @@ for ($i=0;$i<$queens;$i++){
 			echo "<div class='white'>";
 		}
 		if ($placements[$i]==$j){
-			echo "<img height='40' src='../images/queen.png'/>";
+			echo "<img height='20' src='../images/queen.png'/>";
 		}else{
 			echo "&nbsp;";
 		}
