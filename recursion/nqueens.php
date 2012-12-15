@@ -4,6 +4,18 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 
+$queens = 8;
+$tlimit = 30;
+
+if(isset($_GET['queens']) && is_numeric($_GET['queens']) && $_GET['queens'] >= 4){
+	$queens = $_GET['queens'];
+}
+if(isset($_GET['tlimit']) && intval($_GET['tlimit'])){
+	echo "Updating time limit to ".$_GET['tlimit']." seconds";
+	set_time_limit ($_GET['tlimit']);
+	$tlimit = $_GET['tlimit'];
+}
+
 /**
  * @param $board - the board rows which are filled with column numbers
  * @param $index - the current row number
@@ -86,6 +98,12 @@ function isCollision($row, $col, &$board, &$filledPositions){
 <html>
 	<head>
 		<style>
+			div.main {
+				float:left;
+				clear:left;
+				margin:25px;
+				border:1px solid black;
+			}
 			div.black{
 				background-color:#B58862;
 				width:40px;
@@ -105,16 +123,11 @@ function isCollision($row, $col, &$board, &$filledPositions){
 	<body>
 		<h1>Recursion: Brute Force N-Queens</h1>
 		<form action="nqueens.php" method="GET">
-			<p>Number of queens: <input name="queens" type="text" /><input name="submit" type="submit" value="Go" /></p>
+			<p><label for="queens">Number of queens:</label> <input id="queens" name="queens" type="text" value="<?php echo $queens; ?>" /><br />
+			<label for="tlimit">Time limit (seconds):</label> <input id="tlimit" name="tlimit" type="text" value="<?php echo $tlimit; ?>" /><input type="submit" value="Go" /></p>
 		</form>
-		<span style='margin:50px;border:1px solid black;'>
+		<div class="main">
 <?php
-
-if(isset($_GET['queens']) && is_numeric($_GET['queens']) && $_GET['queens'] >= 4){
-	$queens = $_GET['queens'];
-}else{
-	$queens = 8;
-}
 
 $startTime = microtime(true);
 $complete = false;
@@ -152,10 +165,12 @@ for ($i=0;$i<$queens;$i++){
 	}
 	echo"</div>\n";
 }
+?>
+</div>
+<?php
 echo '<div style="clear:both"></div>';
 echo "Total time (seconds): ".($endTime-$startTime)."<br />";
 echo "Peak memory usage (bytes): ".memory_get_peak_usage(true);
 ?>
-		</span>
 	</body>
 </html>
