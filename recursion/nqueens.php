@@ -1,6 +1,8 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
 
 /**
  * @param $board - the board rows which are filled with column numbers
@@ -8,74 +10,71 @@ error_reporting(E_ALL);
  * @param $filledPositions - the columns which are filled with the corresponding row number
  * @param $indexIteration - a counter to determine how many times the index has been tried.
  */
-function placeQueens(&$board, &$index, &$filledPositions, $rand=null, $startRand=null, $rolledOver=false){
+function placeQueens(&$board, &$index, &$filledPositions, $col=null, $startRand=null, $rolledOver=false){
+	$result = true; //default true
+	
 	//check if we're done here.	
+//	echo $index[0].",".$col."---<br />";
 	if($index[0] == count($board)){
 		//done
-		return;
+		return $result && true;
 	}
-	if(!is_null($rand) && $rand >= count($board)){
+	if(!is_null($col) && $col >= count($board)){
 		//roll over to 0
-		$rand = 0;
+		$col = 0;
 		$rolledOver = true;
 	}
 	//generate a new random number starting position
-//	echo "rand: ".$rand.",".$startRand." -- <br />";
-//	var_dump(!is_null($rand) && ($rand == $startRand));
-	if(!is_null($rand) && ($rand == $startRand)){ //rolled over, game unsolvable in current state. Try again.
-//		echo $rand.'=='.$startRand."<br />";
-		$board = array_fill(0,count($board) ,null);
-		$filledPositions = array();
-		$index = array(0);
-		placeQueens($board, $index, $filledPositions);
+	if(!is_null($col) && ($col == $startRand)){ //rolled over, game unsolvable in current state. Try again.
+		//reset board
+//		echo "unsolvable<br />";
+		//$board = array_fill(0,count($board) ,null);
+		//$filledPositions = array();
+		//$index = array(0);
+		//$result = placeQueens($board, $index, $filledPositions);
 		return false;
-	}else if(is_null($rand)){
-		$rand = mt_rand(0,count($board)-1);
-		$startRand = $rand;
+	}else if(is_null($col)){
+		$col = mt_rand(0,count($board)-1);
+		$startRand = $col;
 	}
 	
-//	echo "finding position for {$index[0]},{$rand}<br />";
-	if(isset($filledPositions[$rand])){
-//		echo "fillpos set at {$filledPositions[$rand]},{$rand}<br />";
+	if(isset($filledPositions[$col])){
+//		echo "Collision in column ".$index[0].",".$col."<br />";
 		//try this again, post increment
-		placeQueens($board, $index, $filledPositions, ++$rand, $startRand, $rolledOver);
+		$result = placeQueens($board, $index, $filledPositions, ++$col, $startRand, $rolledOver);
 		$index[0] = $index[0]+1;
-		return;
+		//var_dump($result && true);
+//		if(!$result) echo "false<br />";
+		return $result && true;
 	}
 	//check diagonal
 	if($index[0] > 0){
-//		echo "finding diag for {$index[0]},{$rand}<br />";
 		for($i=1; $i < count($board); $i++){
-			if(isCollision($index[0]+$i, $rand+$i, $board, $filledPositions)
-				|| isCollision($index[0]+$i, $rand-$i, $board, $filledPositions)
-				|| isCollision($index[0]-$i, $rand+$i, $board, $filledPositions)
-				|| isCollision($index[0]-$i, $rand-$i, $board, $filledPositions)
+			if(isCollision($index[0]+$i, $col+$i, $board, $filledPositions)
+				|| isCollision($index[0]+$i, $col-$i, $board, $filledPositions)
+				|| isCollision($index[0]-$i, $col+$i, $board, $filledPositions)
+				|| isCollision($index[0]-$i, $col-$i, $board, $filledPositions)
 			){
-				placeQueens($board, $index, $filledPositions, ++$rand, $startRand, $rolledOver);
+//				echo "Diag collision ".$index[0].",".$col."<br />";
+				$result = placeQueens($board, $index, $filledPositions, ++$col, $startRand, $rolledOver);
 				$index[0] = $index[0]+1;
-				return;
+				return ($result && true);
 			}
 		}
 	}
 	
 	//fallthrough
 	//successful placement
-	$board[$index[0]] = $rand;
-	$filledPositions[$rand] = $index[0];
-//	echo "placed ".$index[0].",".$rand."<br />";
+	$board[$index[0]] = $col;
+	$filledPositions[$col] = $index[0];
+//	echo "placed ".$index[0].",".$col."<br />";
 	$index[0] = $index[0]+1;
-	placeQueens($board, $index, $filledPositions);
-	return true;
+	$result = placeQueens($board, $index, $filledPositions);
+	return $result && true;
 }
 
 function isCollision($row, $col, &$board, &$filledPositions){
 	if($row < 0 || $col < 0 || $row >= count($board) || $col >= count($board)) return false;
-//echo $row." - ".$col;
-//print_r($board);
-//print_r($filledPositions);
-//var_dump(!is_null($board[$row]));
-//var_dump(isset($filledPositions[$col]));
-//echo "<br />";
 	if(!is_null($board[$row]) && $board[$row] == $col){
 		return true;
 	}
@@ -86,26 +85,20 @@ function isCollision($row, $col, &$board, &$filledPositions){
 ?>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="../css/reset.css">
-		<link rel="stylesheet" type="text/css" href="../css/style.css">
 		<style>
-			div{
-				float:left;
-				
-			}
 			div.black{
 				background-color:#B58862;
 				width:40px;
 				height:40px;
 				text-align:center;
-				
+				float:left;
 			}
 			div.white{
 				background-color:#F0D9B5;
 				width:40px;
 				height:40px;
 				text-align:center;
-				
+				float:left;
 			}
 		</style>
 	</head>
@@ -114,28 +107,36 @@ function isCollision($row, $col, &$board, &$filledPositions){
 		<form action="nqueens.php" method="GET">
 			<p>Number of queens: <input name="queens" type="text" /><input name="submit" type="submit" value="Go" /></p>
 		</form>
-		<div style='margin:50px;border:1px solid black;'>
+		<span style='margin:50px;border:1px solid black;'>
 <?php
 
-if(isset($_GET['queens']) && is_numeric($_GET['queens']) && $_GET['queens'] > 4){
+if(isset($_GET['queens']) && is_numeric($_GET['queens']) && $_GET['queens'] >= 4){
 	$queens = $_GET['queens'];
 }else{
 	$queens = 8;
 }
 
-//build an array that is the size of the queens number
-$placements = array_fill(0,$queens,null); //either null or -1
-$filledPositions = array();
-$index = array(0);
-
-placeQueens($placements, $index, $filledPositions);
+$startTime = microtime(true);
+$complete = false;
+//if it fails, kill the call stack and try again.
+while(!$complete){
+//	echo "trying again<br />";
+	//build an array that is the size of the queens number
+	$placements = array_fill(0,$queens,null); //either null or -1
+	$filledPositions = array();
+	$index = array(0);
+//	echo "<br />";
+	$complete = placeQueens($placements, $index, $filledPositions);
+//	var_dump($complete);
+}
+$endTime = microtime(true);
 //doesn't get here on 26
 
 //print_r($placements);
 
 //places queens on the board.
 for ($i=0;$i<$queens;$i++){
-	echo "<div style='clear:left;'>\n";
+	echo '<div style="clear:left;width:'.(40*$queens).'px;">'."\n";
 	for($j=0;$j<$queens;$j++){
 		if(($i+$j)%2==0){
 			echo "<div class='black'>";
@@ -151,8 +152,10 @@ for ($i=0;$i<$queens;$i++){
 	}
 	echo"</div>\n";
 }
-
+echo '<div style="clear:both"></div>';
+echo "Total time (seconds): ".($endTime-$startTime)."<br />";
+echo "Peak memory usage (bytes): ".memory_get_peak_usage(true);
 ?>
-		</div>
+		</span>
 	</body>
 </html>
