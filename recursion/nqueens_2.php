@@ -14,6 +14,7 @@ function placeQueens(&$board, &$index, &$filledPositions, $rand=null, $startRand
 		//done
 		return;
 	}
+	//http://imgur.com/delete/z5O40E9aHn0BLmZ
 	if(!is_null($rand) && $rand >= count($board)){
 		//roll over to 0
 		$rand = 0;

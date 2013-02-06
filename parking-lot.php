@@ -31,6 +31,7 @@
 			<li>Map/Reduce</li>
 			<li><a href="http://getcomposer.org">Composer</a></li>
 			<li>Apache administration</li>
+			<li>Jenkins</li>
 			<ul>
 				<li>Backtracking</li>
 				<li>Evolutionary Algorithms</li>
@@ -43,6 +44,7 @@
 		<h2>Sites</h2>
 		<ul>
 			<li><a href="phptherightway.com">php the right way</a></li>
+			<li><a href="http://jenkins-php.org/">Template for Jenkins Jobs for PHP Projects</li>
 		</ul>
 	</body>
 </html>
